@@ -36,21 +36,27 @@ reportRouter.post("/pdf", async (req, res) => {
   if (!html || typeof html !== "string") {
     return res.status(400).json({ error: "html is required" });
   }
+  if (html.trim().length < 20) {
+    return res.status(400).json({ error: "html looks invalid/empty" });
+  }
 
   try {
-    const pdfBuffer = await htmlToPdfBuffer(html);
+    const pdfBytes = await htmlToPdfBuffer(html);
+    // Puppeteer can return a Uint8Array in newer versions; Express must send a Buffer to avoid JSON serialization.
+    const pdfBuffer = Buffer.isBuffer(pdfBytes) ? pdfBytes : Buffer.from(pdfBytes);
     const safeName = (filename || "pentest-report")
       .toString()
       .replace(/[^a-z0-9-_]+/gi, "-")
       .replace(/^-+|-+$/g, "")
       .slice(0, 80);
 
-    res.setHeader("Content-Type", "application/pdf");
+    res.type("pdf");
     res.setHeader(
       "Content-Disposition",
       `attachment; filename="${safeName || "pentest-report"}.pdf"`
     );
-    res.send(pdfBuffer);
+    res.setHeader("Content-Length", String(pdfBuffer.length));
+    res.status(200).send(pdfBuffer);
   } catch (err) {
     console.error("PDF generation failed:", err);
     res.status(500).json({ error: "Failed to generate PDF" });

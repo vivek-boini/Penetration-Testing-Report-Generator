@@ -26,8 +26,9 @@ app.use(
   })
 );
 
-// Accept JSON bodies (and a higher limit because reports can include long HTML strings).
-app.use(express.json({ limit: "2mb" }));
+// Accept JSON bodies (reports can include large HTML + optional embedded screenshots).
+// If this is too small, the HTML gets truncated and PDF generation can produce corrupted files.
+app.use(express.json({ limit: "25mb" }));
 
 app.get("/health", (req, res) => {
   res.json({ ok: true });
