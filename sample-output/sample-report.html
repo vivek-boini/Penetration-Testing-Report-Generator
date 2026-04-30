@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sample Penetration Testing Report</title>
+    <style>
+      :root { --ink:#0b1220; --muted:#475569; --border:#e2e8f0; --bg:#f8fafc; --accent:#2563eb; }
+      *{ box-sizing:border-box; }
+      body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color:var(--ink); background:var(--bg); }
+      .page{ padding:28px; }
+      .card{ background:#fff; border:1px solid var(--border); border-radius:14px; padding:18px; box-shadow: 0 10px 30px rgba(2,6,23,.06); }
+      h1,h2,h3{ margin:0 0 10px; }
+      h1{ font-size:28px; }
+      h2{ font-size:16px; margin-top:18px; text-transform:uppercase; letter-spacing:.4px; color:#0f172a; }
+      h3{ font-size:14px; margin-top:14px; color:#0f172a; }
+      p{ margin:0 0 10px; line-height:1.45; color:#0f172a; }
+      .muted{ color:var(--muted); }
+      .grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .kvs{ display:grid; gap:6px; font-size:13px; }
+      .kv{ display:flex; gap:8px; }
+      .kv b{ width:140px; color:#0f172a; }
+      .hr{ height:1px; background:var(--border); margin:14px 0; }
+      .finding{ border:1px solid var(--border); border-radius:12px; padding:12px; margin-top:10px; }
+      .finding__head{ display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+      .finding__title{ font-weight:700; }
+      .tag{ border-radius:999px; padding:4px 10px; font-size:12px; color:#0f172a; border:1px solid var(--border); background:#f1f5f9; }
+      .tag--Critical{ background: rgba(239, 68, 68, .12); border-color: rgba(239, 68, 68, .25); }
+      .tag--High{ background: rgba(249, 115, 22, .12); border-color: rgba(249, 115, 22, .25); }
+      .tag--Medium{ background: rgba(234, 179, 8, .12); border-color: rgba(234, 179, 8, .25); }
+      .tag--Low{ background: rgba(34, 197, 94, .12); border-color: rgba(34, 197, 94, .25); }
+      .badge{ display:inline-flex; align-items:center; gap:8px; border-radius:999px; padding:5px 10px; font-size:12px; border:1px solid var(--border); background:#f8fafc; }
+      .scorebar{ height:10px; background:#e2e8f0; border-radius:999px; overflow:hidden; border:1px solid #e2e8f0; }
+      .scorebar > i{ display:block; height:100%; width:0; background: var(--accent); }
+      .tbl{ width:100%; border-collapse: collapse; margin-top:10px; font-size:13px; }
+      .tbl th,.tbl td{ border-bottom:1px solid var(--border); padding:8px; text-align:left; vertical-align:top; }
+      .tbl th{ color: #0f172a; background:#f8fafc; font-weight:700; }
+      ol, ul { margin: 8px 0 10px 18px; padding:0; }
+      .toc li{ margin: 4px 0; }
+      @media print { .page{ padding:0; } }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="card">
+        <h1>ACME Web App Penetration Test (Sample)</h1>
+        <p class="muted">Sample generated output for academic submission</p>
+        <div class="hr"></div>
+        <div class="grid">
+          <div class="kvs">
+            <div class="kv"><b>Testers</b><span>Security Team, Student A</span></div>
+            <div class="kv"><b>Date</b><span>Apr 30, 2026</span></div>
+            <div class="kv"><b>Target</b><span>https://acme.example.com</span></div>
+          </div>
+          <div class="kvs">
+            <div class="kv"><b>Total Findings</b><span>2</span></div>
+            <div class="kv"><b>Highest Severity</b><span>Critical</span></div>
+            <div class="kv"><b>Scoring Model</b><span>CVSS-like (0–10)</span></div>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <h2>Table of Contents</h2>
+        <ol class="toc">
+          <li>Executive Summary</li>
+          <li>Scope</li>
+          <li>Methodology</li>
+          <li>Findings</li>
+          <li>Risk Classification</li>
+          <li>Recommendations</li>
+          <li>Conclusion</li>
+          <li>References</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <h2>Executive Summary</h2>
+        <p>This assessment identified the following findings: 1 Critical, 1 High. The most severe finding was "IDOR in Order Details Endpoint" (Critical, score 9.0).</p>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <h2>Scope</h2>
+        <p><b>Target:</b> https://acme.example.com</p>
+        <p class="muted">Scope includes in-scope hosts/apps and testing constraints agreed with stakeholders.</p>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <h2>Methodology</h2>
+        <ul>
+          <li>Information gathering</li>
+          <li>Manual testing</li>
+          <li>Verification and evidence collection</li>
+          <li>Risk rating and remediation guidance</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <h2>Findings</h2>
+        <h3>Findings Summary</h3>
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>#</th><th>Finding</th><th>Severity</th><th>Score</th><th>Score Band</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td><td>IDOR in Order Details Endpoint</td><td><span class="tag tag--Critical">Critical</span></td><td>9.0</td><td>Critical</td>
+            </tr>
+            <tr>
+              <td>2</td><td>Stored XSS in Product Reviews</td><td><span class="tag tag--High">High</span></td><td>7.6</td><td>High</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="hr"></div>
+
+        <div class="finding">
+          <div class="finding__head">
+            <div>
+              <div class="finding__title">1. IDOR in Order Details Endpoint</div>
+              <div class="muted" style="font-size:12px;margin-top:2px;">Finding ID: sample-001</div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+              <span class="tag tag--Critical">Critical</span>
+              <span class="badge"><b>Score</b> 9.0 / 10</span>
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+            <div class="scorebar"><i style="width:90%; background:#ef4444;"></i></div>
+            <div class="muted" style="font-size:12px;margin-top:6px;">Score band: <b>Critical</b></div>
+          </div>
+          <div class="hr"></div>
+          <h3>Description</h3>
+          <p>Order details can be accessed by changing the order ID, without verifying ownership.</p>
+          <h3>Impact</h3>
+          <p>Unauthorized access to customer data and potential fraud.</p>
+          <h3>Recommendation</h3>
+          <p>Enforce authorization checks for every request and use non-guessable identifiers.</p>
+        </div>
+
+        <div class="finding">
+          <div class="finding__head">
+            <div>
+              <div class="finding__title">2. Stored XSS in Product Reviews</div>
+              <div class="muted" style="font-size:12px;margin-top:2px;">Finding ID: sample-002 • Template: Cross Site Scripting (XSS)</div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+              <span class="tag tag--High">High</span>
+              <span class="badge"><b>Score</b> 7.6 / 10</span>
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+            <div class="scorebar"><i style="width:76%; background:#f97316;"></i></div>
+            <div class="muted" style="font-size:12px;margin-top:6px;">Score band: <b>High</b></div>
+          </div>
+          <div class="hr"></div>
+          <h3>Description</h3>
+          <p>User input is stored and later rendered without safe output encoding.</p>
+          <h3>Impact</h3>
+          <p>Session theft, account takeover, or malicious actions in the victim's browser context.</p>
+          <h3>Recommendation</h3>
+          <p>Use context-aware output encoding and consider CSP and sanitization for rich text.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <h2>Risk Classification</h2>
+        <p class="muted">This sample uses a simple academic severity scale and a CVSS-like score (0–10).</p>
+        <table class="tbl" style="margin-top:12px;">
+          <thead><tr><th>Band</th><th>Score Range</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Critical</td><td>9.0 – 10.0</td><td>Immediate remediation recommended</td></tr>
+            <tr><td>High</td><td>7.0 – 8.9</td><td>Fix as a priority</td></tr>
+            <tr><td>Medium</td><td>4.0 – 6.9</td><td>Fix in normal cycle</td></tr>
+            <tr><td>Low</td><td>0.0 – 3.9</td><td>Monitor / low-risk improvements</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <h2>Recommendations</h2>
+        <ol>
+          <li><b>IDOR in Order Details Endpoint</b> <span class="muted">(Critical, score 9.0)</span><br/>Add strict ownership checks for every order lookup.</li>
+          <li><b>Stored XSS in Product Reviews</b> <span class="muted">(High, score 7.6)</span><br/>Encode output, sanitize rich text, and add CSP.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <h2>Conclusion</h2>
+        <p>Fix findings in order of severity and retest to verify remediation. Maintain secure development practices to prevent recurrence.</p>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <h2>References</h2>
+        <p class="muted">OWASP links for predefined vulnerability templates used in this sample report (duplicates removed).</p>
+        <table class="tbl" style="margin-top:12px;">
+          <thead>
+            <tr>
+              <th>Vulnerability</th>
+              <th>OWASP Category</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cross Site Scripting (XSS)</td>
+              <td>OWASP Top 10 (2021) - A03: Injection</td>
+              <td><a href="https://owasp.org/Top10/A03_2021-Injection/" target="_blank" rel="noreferrer">https://owasp.org/Top10/A03_2021-Injection/</a></td>
+            </tr>
+            <tr>
+              <td>IDOR in Order Details Endpoint</td>
+              <td>Not mapped</td>
+              <td><span class="muted">-</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
+
